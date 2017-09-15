@@ -128,7 +128,7 @@ class TestProcess(unittest.TestCase):
     assert_equal('Tor version %s.\n' % test.tor_version(), run_tor(tor_cmd, '--version'))
 
   @asynchronous
-  @unittest.skip(test.tor_version < '0.3.0')
+  @unittest.skip(test.tor_version() < '0.3.0')
   def test_help_argument_old(tor_cmd):
     """
     Check that 'tor --help' provides the expected output.
@@ -142,7 +142,7 @@ class TestProcess(unittest.TestCase):
     assert_equal(help_output, run_tor(tor_cmd, '-h'), "'tor -h' should simply be an alias for 'tor --help'")
 
   @asynchronous
-  @unittest.skip(test.tor_version >= '0.3.0')
+  @unittest.skip(test.tor_version() >= '0.3.0')
   def test_help_argument_new(tor_cmd):
     """
     Check that 'tor --help' provides the expected output.
@@ -231,7 +231,7 @@ class TestProcess(unittest.TestCase):
     assert_in('Nickname stemIntegTest', full_output)
 
   @asynchronous
-  @unittest.skip(test.tor_version < '0.3.0')
+  @unittest.skip(test.tor_version() < '0.3.0')
   def test_validate_config_argument(tor_cmd):
     """
     Exercises our 'tor --validate-config' argument.
@@ -312,7 +312,7 @@ class TestProcess(unittest.TestCase):
           assert_equal('nope', str(exc))
 
   @asynchronous
-  @unittest.skip(test.tor_version < '0.3.0')
+  @unittest.skip(test.tor_version() < '0.3.0')
   def test_torrc_arguments(tor_cmd):
     """
     Pass configuration options on the commandline.
@@ -341,7 +341,7 @@ class TestProcess(unittest.TestCase):
       assert_equal(expected, result)
 
   @asynchronous
-  @unittest.skip(test.tor_version < '0.3.0')
+  @unittest.skip(test.tor_version() < '0.3.0')
   def test_torrc_arguments_via_stdin(tor_cmd):
     """
     Pass configuration options via stdin.
