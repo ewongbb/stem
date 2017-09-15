@@ -216,6 +216,7 @@ class TestProcess(unittest.TestCase):
     assert_in('Nickname stemIntegTest', full_output)
 
   @asynchronous
+  @unittest.skip(test.tor_version < '0.3.0')
   def test_validate_config_argument(tor_cmd):
     """
     Exercises our 'tor --validate-config' argument.
@@ -325,6 +326,7 @@ class TestProcess(unittest.TestCase):
       assert_equal(expected, result)
 
   @asynchronous
+  @unittest.skip(test.tor_version < '0.3.0')
   def test_torrc_arguments_via_stdin(tor_cmd):
     """
     Pass configuration options via stdin.
@@ -480,7 +482,7 @@ class TestProcess(unittest.TestCase):
     """
 
     if test.tor_version() < stem.version.Requirement.TORRC_VIA_STDIN:
-      skip('(requires )' % stem.version.Requirement.TORRC_VIA_STDIN)
+      skip('(requires %s )' % stem.version.Requirement.TORRC_VIA_STDIN)
 
     with tmp_directory() as data_directory:
       control_port = random_port()
