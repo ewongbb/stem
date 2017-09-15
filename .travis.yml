@@ -18,7 +18,7 @@ before_install:
   - gpg --export A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89 | sudo apt-key add -
   - echo "deb http://deb.torproject.org/torproject.org tor-nightly-master-stretch main" | sudo tee -a /etc/apt/sources.list
   - sudo apt-get update
-  - sudo apt-get install tor deb.torproject.org-keyring
+  - sudo apt-get install tor
 
 # Dependencies installation commands
 install:
