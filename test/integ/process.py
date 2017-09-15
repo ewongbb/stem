@@ -196,6 +196,8 @@ class TestProcess(unittest.TestCase):
     Check that 'tor --hash-password' balks if not provided with something to
     hash.
     """
+    if test.tor_version() < '0.3.0':
+        skip('Not applicable to this version.')
 
     output = run_tor(tor_cmd, '--hash-password', expect_failure = True)
     assert_in("[warn] Command-line option '--hash-password' with no value. Failing.", output)
