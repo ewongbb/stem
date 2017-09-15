@@ -47,7 +47,7 @@ DataDirectory %s
 
 TOR_CMD = None
 
-    
+
 def random_port():
   while True:
     port = random.randint(1024, 65535)
@@ -154,7 +154,6 @@ class TestProcess(unittest.TestCase):
       raise AssertionError("Help output didn't have the expected strings: %s" % help_output)
 
     assert_equal(help_output, run_tor(tor_cmd, '-h'), "'tor -h' should simply be an alias for 'tor --help'")
-
 
   @asynchronous
   def test_quiet_argument(tor_cmd):
