@@ -479,7 +479,7 @@ class TestProcess(unittest.TestCase):
     """
 
     if test.tor_version() < stem.version.Requirement.TORRC_VIA_STDIN:
-      skip('(requires )' % stem.version.Requirement.TORRC_VIA_STDIN)
+      skip('(requires %s)' % stem.version.Requirement.TORRC_VIA_STDIN)
 
     with tmp_directory() as data_directory:
       control_port = random_port()
