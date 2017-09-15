@@ -216,11 +216,13 @@ class TestProcess(unittest.TestCase):
     assert_in('Nickname stemIntegTest', full_output)
 
   @asynchronous
-  @unittest.skipIf(test.tor_version() < '0.3.0', "not supported in this version")
   def test_validate_config_argument(tor_cmd):
     """
     Exercises our 'tor --validate-config' argument.
     """
+
+    if test.tor_version() < '0.3.0':
+        skip('Not supported in this version')
 
     valid_output = run_tor(tor_cmd, '--verify-config', with_torrc = True)
     assert_in('Configuration was valid\n', valid_output, 'Expected configuration to be valid')
@@ -297,11 +299,12 @@ class TestProcess(unittest.TestCase):
           assert_equal('nope', str(exc))
 
   @asynchronous
-  @skipIf(test.tor_version() < '0.3.0', "Not supported in this version")
   def test_torrc_arguments(tor_cmd):
     """
     Pass configuration options on the commandline.
     """
+    if test.tor_version() < '0.3.0':
+        skip('Not supported in this version')
 
     with torrc() as torrc_path:
       config_args = [
