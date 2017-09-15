@@ -14,7 +14,7 @@ env:
 
 before_install:
   - sudo apt-get update -qq
-  - sudo apt-get install -qq tor
+  - sudo apt-get -t deb.torproject.org install -qq tor
 
 # Dependencies installation commands
 install:
