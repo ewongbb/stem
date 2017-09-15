@@ -332,7 +332,7 @@ class TestProcess(unittest.TestCase):
     """
 
     if test.tor_version() < stem.version.Requirement.TORRC_VIA_STDIN:
-      skip('(requires )' % stem.version.Requirement.TORRC_VIA_STDIN)
+      skip('(requires %s)' % stem.version.Requirement.TORRC_VIA_STDIN)
 
     with tmp_directory() as data_directory:
       torrc = BASIC_RELAY_TORRC % data_directory
