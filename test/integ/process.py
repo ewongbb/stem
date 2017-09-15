@@ -297,7 +297,7 @@ class TestProcess(unittest.TestCase):
           assert_equal('nope', str(exc))
 
   @asynchronous
-  @unittest.skipIf(test.tor_version() < '0.3.0', "Not supported in this version")
+  @skipIf(test.tor_version() < '0.3.0', "Not supported in this version")
   def test_torrc_arguments(tor_cmd):
     """
     Pass configuration options on the commandline.
