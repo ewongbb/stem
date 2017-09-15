@@ -208,6 +208,8 @@ class TestProcess(unittest.TestCase):
     Exercises our 'tor --dump-config' arugments.
     """
 
+    skipIf(test.tor_version() < '0.3.0', 'Not applicable')
+
     short_output = run_tor(tor_cmd, '--dump-config', 'short', with_torrc = True)
     non_builtin_output = run_tor(tor_cmd, '--dump-config', 'non-builtin', with_torrc = True)
     full_output = run_tor(tor_cmd, '--dump-config', 'full', with_torrc = True)
