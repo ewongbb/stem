@@ -128,10 +128,13 @@ class TestProcess(unittest.TestCase):
     assert_equal('Tor version %s.\n' % test.tor_version(), run_tor(tor_cmd, '--version'))
 
   @asynchronous
-  def test_help_argument(tor_cmd):
+  def test_help_argument_v3(tor_cmd):
     """
     Check that 'tor --help' provides the expected output.
     """
+
+    if test.tor_version() < '0.3.0':
+      skip('Not applicable to installed tor version')
 
     help_output = run_tor(tor_cmd, '--help')
 
@@ -140,6 +143,23 @@ class TestProcess(unittest.TestCase):
 
     assert_equal(help_output, run_tor(tor_cmd, '-h'), "'tor -h' should simply be an alias for 'tor --help'")
 
+  @asynchronous
+  def test_help_argument_v2(tor_cmd):
+    """
+    Check that 'tor --help' provides the expected output.
+    """
+
+    if test.tor_version() >= '0.3.0':
+      skip('Not applicable to installed tor version')
+
+    help_output = run_tor(tor_cmd, '--help')
+
+    if not help_output.endswith('tor -f <torrc> [args]\nSee man page for options, or https://www.torproject.org/ for documentation.\n'):
+      raise AssertionError("Help output didn't have the expected strings: %s" % help_output)
+
+    assert_equal(help_output, run_tor(tor_cmd, '-h'), "'tor -h' should simply be an alias for 'tor --help'")
+
+  @asynchronous
   @asynchronous
   def test_quiet_argument(tor_cmd):
     """
@@ -208,7 +228,8 @@ class TestProcess(unittest.TestCase):
     Exercises our 'tor --dump-config' arugments.
     """
 
-    skipIf(test.tor_version() < '0.3.0', 'Not applicable')
+    if test.tor_version() < '0.3.0':
+        skip('Not applicable to installed version of tor')
 
     short_output = run_tor(tor_cmd, '--dump-config', 'short', with_torrc = True)
     non_builtin_output = run_tor(tor_cmd, '--dump-config', 'non-builtin', with_torrc = True)
