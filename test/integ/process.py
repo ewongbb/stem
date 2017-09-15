@@ -128,7 +128,8 @@ class TestProcess(unittest.TestCase):
     assert_equal('Tor version %s.\n' % test.tor_version(), run_tor(tor_cmd, '--version'))
 
   @asynchronous
-  def test_help_argument(tor_cmd):
+  @unittest.skip(test.tor_version < '0.3.0')
+  def test_help_argument_old(tor_cmd):
     """
     Check that 'tor --help' provides the expected output.
     """
@@ -139,6 +140,21 @@ class TestProcess(unittest.TestCase):
       raise AssertionError("Help output didn't have the expected strings: %s" % help_output)
 
     assert_equal(help_output, run_tor(tor_cmd, '-h'), "'tor -h' should simply be an alias for 'tor --help'")
+
+  @asynchronous
+  @unittest.skip(test.tor_version >= '0.3.0')
+  def test_help_argument_new(tor_cmd):
+    """
+    Check that 'tor --help' provides the expected output.
+    """
+
+    help_output = run_tor(tor_cmd, '--help')
+
+    if not help_output.startswith('Sep 15 06:55:08.834 [notice]') or not help_output.endswith('tor -f <torrc> [args]\nSee man page for options, or https://www.torproject.org/ for documentation.\n'):
+      raise AssertionError("Help output didn't have the expected strings: %s" % help_output)
+
+    assert_equal(help_output, run_tor(tor_cmd, '-h'), "'tor -h' should simply be an alias for 'tor --help'")
+
 
   @asynchronous
   def test_quiet_argument(tor_cmd):
