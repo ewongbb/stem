@@ -47,7 +47,7 @@ DataDirectory %s
 
 TOR_CMD = None
 
-
+    
 def random_port():
   while True:
     port = random.randint(1024, 65535)
@@ -296,6 +296,7 @@ class TestProcess(unittest.TestCase):
           assert_equal('nope', str(exc))
 
   @asynchronous
+  @unittest.skip(test.tor_version < '0.3.0')
   def test_torrc_arguments(tor_cmd):
     """
     Pass configuration options on the commandline.
