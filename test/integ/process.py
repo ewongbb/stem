@@ -216,6 +216,7 @@ class TestProcess(unittest.TestCase):
     assert_in("[warn] Command-line option '--hash-password' with no value. Failing.", output)
 
   @asynchronous
+  @unittest.skip(test.tor_version() < '0.3.0')
   def test_dump_config_argument(tor_cmd):
     """
     Exercises our 'tor --dump-config' arugments.
