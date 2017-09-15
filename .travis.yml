@@ -13,6 +13,7 @@ env:
   - TEST_PARAM="--integ"
 
 before_install:
+  - sudo cat /etc/apt/sources.list
   - sudo mkdir -p /etc/apt
   - sudo echo "deb http://deb.torproject.org/torproject/ main" >> /etc/apt/sources.list
   - sudo apt-get update -qq
