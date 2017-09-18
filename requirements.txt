@@ -4,3 +4,4 @@ pycodestyle
 tox
 cryptography
 pynacl
+python-coveralls

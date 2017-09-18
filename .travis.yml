@@ -32,6 +32,9 @@ after_script:
   # List installed packages along with their versions.
   - "pip list"
 
+after_success:
+  - coveralls
+
 sudo: false
 
 git:
