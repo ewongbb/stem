@@ -252,32 +252,6 @@ class TestBaseController(unittest.TestCase):
   @test.require.controller
   def test_send_long_msg(self):
 
-    # makes a getinfo query, then checks that the heartbeat is close to now
-    # use_msg = 'GETINFO version\nGETINFO version\nGETINFO version\nGETINFO version\n' + \
-    #           'GETINFO version\nGETINFO version\nGETINFO version\nGETINFO version\n' + \
-    #           'GETINFO version\nGETINFO version\nGETINFO version\nGETINFO version\n' + \
-    #           'GETINFO version\nGETINFO version\nGETINFO version\nGETINFO version\n' + \
-    #           'GETINFO version\nGETINFO version\nGETINFO version\nGETINFO version\n' + \
-    #            'GETINFO version\nGETINFO version\nGETINFO version\nGETINFO version\n' + \
-    #          'GETINFO version\nGETINFO version\nGETINFO version\nGETINFO version\n' + \
-    #           'GETINFO version\nGETINFO version\nGETINFO version\nGETINFO version\n' + \
-    #           'GETINFO version\nGETINFO version\nGETINFO version\nGETINFO version\n' + \
-    #          'GETINFO version\nGETINFO version\nGETINFO version\nGETINFO version\n' + \
-    #          'GETINFO version\nGETINFO version\nGETINFO version\nGETINFO version\n' + \
-    #          'GETINFO version\nGETINFO version\nGETINFO version\nGETINFO version\n' + \
-    #          'GETINFO version\nGETINFO version\nGETINFO version\nGETINFO version\n' + \
-    #          'GETINFO version\nGETINFO version\nGETINFO version\nGETINFO version\n' + \
-    #          'GETINFO version\nGETINFO version\nGETINFO version\nGETINFO version\n' + \
-    #          'GETINFO version\nGETINFO version\nGETINFO version\nGETINFO version\n' + \
-    #          'GETINFO version\nGETINFO version\nGETINFO version\nGETINFO version\n' + \
-    #          'GETINFO version\nGETINFO version\nGETINFO version\nGETINFO version\n' + \
-    #          'GETINFO version\nGETINFO version\nGETINFO version\nGETINFO version\n' + \
-    #          'GETINFO version\nGETINFO version\nGETINFO version\nGETINFO version\n' + \
-    #          'GETINFO version\nGETINFO version\nGETINFO version\nGETINFO version\n' + \
-    #          'GETINFO version\nGETINFO version\nGETINFO version\nGETINFO version\n' + \
-    #          'GETINFO version\nGETINFO version\nGETINFO version\nGETINFO version\n' + \
-    #          'GETINFO version\nGETINFO version\nGETINFO version\nGETINFO version\n'
-
     use_msg = 'GETINFO info/names'
 
     with test.runner.get_runner().get_tor_socket() as control_socket:
