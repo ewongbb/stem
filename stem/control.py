@@ -20,6 +20,7 @@ Controller you can then authenticate yourself using its
 
   import getpass
   import sys
+  import time
 
   import stem
   import stem.connection
@@ -553,6 +554,7 @@ class BaseController(object):
     # queues where incoming messages are directed
     self._reply_queue = queue.Queue()
     self._event_queue = queue.Queue()
+    self._test_queue = queue.Queue()
 
     # thread to continually pull from the control socket
     self._reader_thread = None
@@ -626,6 +628,12 @@ class BaseController(object):
       #   Thankfully this only seems to arise in edge cases around rapidly
       #   closing/reconnecting the socket.
 
+      while not self._test_queue.empty():
+        try:
+          self._test_queue.get_nowait()
+        except queue.Empty:
+          break
+
       while not self._reply_queue.empty():
         try:
           response = self._reply_queue.get_nowait()
@@ -645,8 +653,12 @@ class BaseController(object):
           break
 
       try:
-        self._socket.send(message)
+        msg = MessageClass(message)
+        for msg_line in msg:
+          self._socket.send(msg_line)
+        # self._socket.send(message)
         response = self._reply_queue.get()
+        self._test_queue.get()
 
         # If the message we received back had an exception then re-raise it to the
         # caller. Otherwise return the response.
@@ -941,13 +953,14 @@ class BaseController(object):
           self._event_notice.set()
         else:
           # response to a msg() call
+          self._test_queue.put(control_message)
           self._reply_queue.put(control_message)
       except stem.ControllerError as exc:
         # Assume that all exceptions belong to the reader. This isn't always
         # true, but the msg() call can do a better job of sorting it out.
         #
         # Be aware that the msg() method relies on this to unblock callers.
-
+        self._test_queue.put(exc)
         self._reply_queue.put(exc)
 
   def _event_loop(self):
@@ -3931,3 +3944,21 @@ def _case_insensitive_lookup(entries, key, default = UNDEFINED):
           return entry
 
   raise ValueError("key '%s' doesn't exist in dict: %s" % (key, entries))
+
+
+class MessageClass(object):
+
+  def __init__(self, in_msg):
+    self.msg = in_msg
+
+  def __iter__(self):
+    def iter_msg():
+      if len(self.msg) < 1024:
+        yield self.msg
+      else:
+        m = self.msg[:1024]
+        self.msg = self.msg[1024 + 1:]
+        yield m
+
+    for lines in iter_msg():
+      yield lines

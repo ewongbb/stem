@@ -17,6 +17,7 @@ Tor...
 
   import stem
   import stem.connection
+  import stem.control
   import stem.socket
 
   if __name__ == '__main__':
@@ -75,6 +76,7 @@ import socket
 import threading
 import time
 
+import stem.control
 import stem.prereq
 import stem.response
 import stem.util.str_tools
@@ -484,8 +486,12 @@ def send_message(control_file, message, raw = False):
   if not raw:
     message = send_formatting(message)
 
+  msg = stem.control.MessageClass(message)
+
   try:
-    control_file.write(stem.util.str_tools._to_bytes(message))
+    for msg_line in msg:
+      control_file.write(stem.util.str_tools._to_bytes(msg_line))
+    # control_file.write(stem.util.str_tools._to_bytes(message))
     control_file.flush()
 
     if log.is_tracing():
